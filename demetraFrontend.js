@@ -101,13 +101,13 @@ function DemetraFrontend (mac) {
             seriesType: "line",
             series: {
                 2: {
-                    type: "steppedArea", 
-                    lineDashStyle: [4, 1],
+                    lineDashStyle: [40, 10],
+                    lineWidth: 1, 
                     visibleInLegend: false, 
                     areaOpacity: 0},
                 3: {
-                    type: "steppedArea",  
-                    lineDashStyle: [4, 1],
+                    lineWidth: 1,
+                    lineDashStyle: [40, 10],
                     visibleInLegend: false, 
                     areaOpacity: 0}
                 },
