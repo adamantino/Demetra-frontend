@@ -61,18 +61,31 @@ function DemetraFrontend (mac) {
     this.updateGUI = function(id)
     {
         var data = JSON.parse(localStorage.getItem(id));
+        var string = localStorage.getItem(id);
 
         var statesArray = [["X", "Air", "Ground", "", ""]];
         var i = 0;
-                
+        
+        var high_line = 21;
+        var low_line = 17;
+        
+        //2013-08-09T11:23:27.000+0200
+        
+        
         for(var sample_index=0; sample_index<data.length; sample_index++){
             var sample = data[sample_index];
-                     
+            
             var air_temp;
             var ground_temp;
             
-            var high_line = 21;
-            var low_line = 17;
+            var timestamp = new Date();
+            
+            timestamp.setUTCFullYear(parseInt(sample.send_timestamp.substring(0,4), 10));            
+            timestamp.setUTCMonth(parseInt(sample.send_timestamp.substring(5,7), 10)-1);            
+            timestamp.setUTCDate(parseInt(sample.send_timestamp.substring(8,10), 10));   
+            timestamp.setUTCHours(parseInt(sample.send_timestamp.substring(11,13), 10));   
+            timestamp.setUTCMinutes(parseInt(sample.send_timestamp.substring(14,16), 10));   
+            timestamp.setUTCSeconds(parseInt(sample.send_timestamp.substring(17,19), 10));   
                      
             $.each(sample.sensor_values, function() {
                 if(this["local_feed_id"]==1){
@@ -83,8 +96,10 @@ function DemetraFrontend (mac) {
                 }
                         
                 if(air_temp!=null && ground_temp!=null){
-                    var stateitem = [i++, air_temp, ground_temp, high_line, low_line];
+                    var stateitem = [timestamp, air_temp, ground_temp, high_line, low_line];
                     statesArray.push(stateitem);
+                    air_temp = null;
+                    ground_temp = null;
                 }
             })
         }
